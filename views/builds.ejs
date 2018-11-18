@@ -1,22 +1,51 @@
-<% include partials/header %>
+<!-- <% include partials/header %>
 <div class="container">
     <table class="table">
-    <thead>
-        <tr>
-        <th scope="col">Id</th>
-        <th scope="col">Name</th>
-        <th scope="col">Price</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% computer_builds.forEach( function(eachBuilds) { %>
-        <tr>
-        <th scope="row"><%= eachBuilds.build_id %></th>
-        <td><%= eachBuilds.build_name %></td>
-        <td><%= eachBuilds.build_price %></td>
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% computer_builds.forEach( function(eachBuilds) { %>
+            <tr>
+                <th scope="row" rowspan="4">
+                    <%= eachBuilds.build_id %>
+                </th>
+                <td>
+                    <%= eachBuilds.build_name %>
+                </td>
+                <td rowspan="4">
+                    <%= eachBuilds.build_price %>
+                </td>
+            <tr>
+            <tr>
+                <th></th>
+                <td>
+                    <%= eachBuilds.build_data.cpu.part_name %>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <th></th>
+                <td>
+                    <%= eachBuilds.build_data.gpu.part_name %>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <th></th>
+                <td>
+                    <%= eachBuilds.build_data.ram.part_name %>
+                </td>
+                <td></td>
+            </tr>
+        </tbody>
         <% }); %>
-        <tr>
-    </tbody>
     </table>
 </div>
-<% include partials/footer %>
+<% include partials/footer %> -->
+
+<%- JSON.stringify(computer_builds) %>
