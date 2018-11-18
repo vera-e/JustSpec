@@ -1,0 +1,24 @@
+<% include partials/header %>
+<div class="container">
+    <table class="table">
+    <thead>
+        <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Score</th>
+        <th scope="col">Speed</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% cpu_data.forEach( function(eachCpu) { %>
+        <tr>
+        <th scope="row"><%= eachCpu.part_name %></th>
+        <td><%= eachCpu.part_price %></td>
+        <td><%= eachCpu.part_score %></td>
+        <td><%= eachCpu.part_data.speed %></td>
+        <% }); %>
+        <tr>
+    </tbody>
+    </table>
+</div>
+<% include partials/footer %>

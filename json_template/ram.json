@@ -1,0 +1,17 @@
+// Kingston Value 1x4GB 2400
+// 1250
+// 72
+{
+    "speed": "2400",
+    "dimm": "1",
+    "capacity": "4" 
+}
+
+// Apacer Desktop Memomy 1x8GB 2400
+// 1950
+// 86
+{
+    "speed": "2400",
+    "dimm": "1",
+    "capacity": "8" 
+}
