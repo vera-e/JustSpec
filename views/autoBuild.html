@@ -79,16 +79,60 @@
             width: 100%; /* Width of the outside container */
         }
 
+        .close {
+            float: right;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .autoBBut{
+            color: whitesmoke;
+            font-size: 1.5em;
+            background-color: var(--main-theme-color);
+            border:3px solid whitesmoke;
+            border-radius:.5em;
+        }
+        .autoBBut:hover,
+        .autoBBut:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .dtBut{
+            color: white;
+            float: right;
+            margin-left:auto;
+            margin-right:0;
+        }
+        .dtBut:hover,
+        .dtBut:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
         .slider {
     -webkit-appearance: none;
     width: 50%;
     height: 15px;
     border-radius: 5px;   
-    background: #d3d3d3;
+    background: #a0bcc5;
     outline: none;
     opacity: 0.7;
     -webkit-transition: .2s;
     transition: opacity .2s;
+}
+.slider :disabled,
+.slider[disabled]{
+    background: #d3d3d3;
 }
 
 .slider::-webkit-slider-thumb {
@@ -97,7 +141,7 @@
     width: 25px;
     height: 25px;
     border-radius: 50%; 
-    background: var(--main-black-color);
+    background: #d3d3d3;
     cursor: pointer;
 }
 
@@ -105,7 +149,7 @@
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    background: var(--main-black-color);
+    background: #d3d3d3;
     cursor: pointer;
 }
          
@@ -151,8 +195,7 @@
                 <div class="col allbody" style="margin-right: 1rem; background-color: var(--main-theme-color);">
                     <div style="text-align: center;">
                         <br>
-                        <button type="button" style="color: whitesmoke;font-size: 1.5em;background-color: var(--main-theme-color);border:3px solid whitesmoke; border-radius:.5em;"
-                            onclick="auto_build()">&nbspAUTO BUILD&nbsp</button>
+                        <button type="button" class="autoBBut" onclick="auto_build()">&nbspAUTO BUILD&nbsp</button>
                         <br><br>
                         <div id="showBuild"></div>
                     </div>
@@ -568,10 +611,10 @@
                 divv.className = "partBox";
 
                 divv.ppp = aBUILD[tt];
-                divv.innerHTML = part_type_name[tt] + " -> " + aBUILD[tt].part_name + "<br>";
+                divv.innerHTML = " &lt; " + part_type_name[tt] + " &gt;<br> " + aBUILD[tt].part_name + "<br>";
                 divv.innerHTML += "Price : " + aBUILD[tt].part_price + "<br>";
                 divv.innerHTML += "Score : " + aBUILD[tt].part_score;
-                divv.innerHTML += '<a style="float: right;margin-left:auto; margin-right:0;" onclick="openPart(this)">o</a><br>';
+                divv.innerHTML += '<a class="dtBut" onclick="openPart(this)">&#9776;</a><br>';
 
                 showB.appendChild(divv);
             }
@@ -580,9 +623,48 @@
             bott.innerHTML += "Total Price : " + aBUILD.price + "<br>";
             bott.innerHTML += "Total Score : " + aBUILD.score + "<br>";
             showB.appendChild(bott);
+            var butt = document.createElement('button');
+            butt.type = "button";
+            butt.className = "autoBBut";
+            butt.innerHTML = "&nbspSAVE BUILD&nbsp";
+            butt.onclick = function(){save_build(aBUILD);};
+            showB.appendChild(butt);
         }
         function openPart(x) {
-            console.log(x.parentElement.ppp);
+            var str = '', p = x.parentElement.ppp;
+            var k = Object.keys(p);
+            console.log(k);
+            k = k.filter(function (i) {
+                return i != 'part_id' && i != 'part_name' && i != 'part_type'
+                    && i != 'part_price' && i != 'part_score' && i != 'part_brand';
+            });
+            console.log(k);
+
+            str += 'Name : ' + p.part_name + '\n';
+            str += 'Type : ' + part_type_name[p.part_type] + '\n';
+            str += 'Price : ' + p.part_price + '\n';
+            str += 'Score : ' + p.part_score + '\n';
+            for (i = 0; i < k.length; i++) {
+                str += k[i] + ' : ' + p[k[i]] + '\n';
+            }
+            alert(str);
+            //console.log(x.parentElement.ppp);
+        }
+        function save_build(x) {
+            var name = prompt("ตั้งชื่อ Build ด้วยครับ", "มักง่ายจัง ไม่ตั้งชื่อ");
+            if (name == null || name == "") {
+                //alert("เซฟไม่สำเร็จ");
+                return ;
+            } else {
+                var pstr = {};
+                for(var k in part_type_name){
+                    pstr[k]=""+x[k].part_id;
+                }
+                var str = "insert into computer_build values (DEFAULT, '"+name+"', "+x.price+", '"+JSON.stringify(pstr)+"', "+x.score+")";
+                db(str,function(){
+                    alert("เซฟสำเร็จ");
+                });
+            }
         }
 
         var maxScore = 0;
