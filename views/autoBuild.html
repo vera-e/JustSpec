@@ -1,0 +1,902 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Import!! -->
+    <script src="database.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+
+    <style>
+        :root {
+            --main-theme-color: tomato;
+            --main-gold-color: rgb(255, 224, 87);
+            --main-gold2-color: rgb(255, 206, 72);
+            --main-black-color: rgb(60, 60, 60);
+        }
+        .allbody { 
+            height: 100%;
+            /* background-color: #dbdbdb; */
+            border-radius: .25rem;
+            /* height: 8rem; */
+        }
+        .partBox {
+            color: whitesmoke;
+            font-size: 1em;
+            background-color: var(--main-theme-color);
+            border:3px solid whitesmoke;
+            border-radius:.5em;
+        }
+        h1 {
+            font-size: 2em;
+            line-height: 1em;
+        }
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto; /* 10% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 40%; /* Could be more or less, depending on screen size */
+        }
+
+        /* The Close Button */
+        .close {
+            float: right;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+                .slidecontainer {
+            width: 100%; /* Width of the outside container */
+        }
+
+        .slider {
+    -webkit-appearance: none;
+    width: 50%;
+    height: 15px;
+    border-radius: 5px;   
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%; 
+    background: var(--main-black-color);
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: var(--main-black-color);
+    cursor: pointer;
+}
+         
+    </style>
+    <title>Auto Build!</title>
+</head>
+
+<body>
+
+    <!-- Main Body -->
+    <div class="container">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-8 allbody" style="border:3px solid #dbdbdb; margin-right: 1rem;margin-left: 1rem;">
+                    <br><br>
+                    <div class="form-group">
+                        <h1 style="background-color: var(--main-gold-color);border-radius: .5rem; color: white;display:inline-block; ">&nbsp&nbsp
+                            Budget &nbsp&nbsp
+                            <input type="number" step="100" id="budgetInput" style="text-align:right;color:var(--main-gold2-color);border-radius: .5rem; border:3px solid var(--main-gold-color);"></h1>
+                        <br>
+                        <!-- PrrtButt -->
+                        <div style="display: flex;font-size: 1.5em;">
+                            <button type="button" id="prrtAddBtn" style="display:inline-block;font-size: 1em;width: 2em;height: 2em;color: white;background-color: var(--main-black-color);font-weight: bold; border-radius: 2em 0 0 2em;">+</button>
+                            <div style="color: var(--main-black-color);border:3px solid var(--main-black-color); border-radius: 0 .5em .5em 0;">&nbspPriority
+                                Adjustment&nbsp</div>
+                        </div>
+                        <br>
+                        <div class="container" id="prrtAdjBox" style="border:2px solid var(--main-black-color); border-radius: .5rem;">
+
+                        </div>
+                        <!-- condiButt -->
+                        <br>
+                        <div style="display: flex;font-size: 1.5em;">
+                            <button type="button" id="condiAddBtn" style="display:inline-block;font-size: 1em;width: 2em;height: 2em;color: white;background-color: var(--main-black-color);font-weight: bold; border-radius: 2em 0 0 2em;">+</button>
+                            <div style="color: var(--main-black-color);border:3px solid var(--main-black-color); border-radius: 0 .5em .5em 0;">&nbspCondition&nbsp</div>
+                        </div>
+                        <br>
+                        <div class="container" id="condiBox" style="border:2px solid var(--main-black-color); border-radius: .5rem;">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col allbody" style="margin-right: 1rem; background-color: var(--main-theme-color);">
+                    <div style="text-align: center;">
+                        <br>
+                        <button type="button" style="color: whitesmoke;font-size: 1.5em;background-color: var(--main-theme-color);border:3px solid whitesmoke; border-radius:.5em;"
+                            onclick="auto_build()">&nbspAUTO BUILD&nbsp</button>
+                        <br><br>
+                        <div id="showBuild"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- The Modal (Popup)---------------------------------------------------------------------- -->
+        <!-- Prrt Adj pop-up -->
+        <div id="prrtModal" class="modal">
+
+
+            <div class="modal-content">
+                <a id="prrtClose" style="float: right;margin-left:auto; margin-right:0;" class="close" data-dismiss="modal">&times;</a>
+                <p>
+                    <div style="font-size:30px;text-align:center;color: var(--main-black-color);border:3px solid var(--main-black-color); border-radius: .5em;">&nbspPriority
+                        Adjustment&nbsp</div>
+                </p>
+                <form onsubmit="return false" id="prrtForm">
+                    <label for="slctTypePrrt">- Select Type -</label>
+                    <select class="form-control" id="slctTypePrrt">
+                        <option disabled selected value> -- select an option -- </option>
+                    </select>
+                    <P>
+                        <div class="slidecontainer">
+                            <label for="prrtSlide">% Priority Set &nbsp &nbsp</label>
+                            <input type="range" min="1" max="100" class="slider" id="prrtSlide" disabled>
+                        </div>
+                        <div>
+                            <input class="form-control" type="text" id="prrtSlideV" disabled>
+                        </div>
+                    </P>
+                    <P>
+                        <button type="button" onclick="resetPrrt()" class="btn btn-primary">Reset</button>
+                        <button type="button" onclick="submitPrrt()" class="btn btn-success">Submit</button>
+                    </P>
+
+                </form>
+            </div>
+
+        </div>
+
+        <!-- Condition pop-up -->
+        <div id="condiModal" class="modal">
+
+            <div class="modal-content">
+                <a id="condiClose" style="float: right;margin-left:auto; margin-right:0;" class="close" data-dismiss="modal">&times;</a>
+                <p>
+                    <div style="font-size:30px;text-align:center;color: var(--main-black-color);border:3px solid var(--main-black-color); border-radius: .5em;">&nbspCondition&nbsp</div>
+                </p>
+                <form onsubmit="return false" id="condiForm">
+                    <label for="slctTypeCondi">- Select Type -</label>
+                    <select class="form-control" id="slctTypeCondi">
+                        <option disabled selected value> -- select an option -- </option>
+                    </select>
+                    <P id="condiPar">
+                        Type Condition<br>
+                        <select class="form-control" id="slctAttrCondi" style="width: 39%;display: inline-block;"
+                            disabled>
+                            <option disabled selected value> Attribute </option>
+                        </select>
+                        <select class="form-control" id="slctXXCondi" style="width: 20%;display: inline-block;"
+                            disabled>
+                            <option disabled selected value> X </option>
+                        </select>
+                        <select class="form-control" id="slctValeCondi" style="width: 39%;display: inline-block;"
+                            disabled>
+                            <option disabled selected value> Value </option>
+                        </select>
+                        <!-- <input type="number" step="1" id="slctValeCondi" placeholder = " Value " style="width: 39%;"  disabled> -->
+                    </P>
+                    <P>
+                        <button type="button" onclick="resetCondi()" class="btn btn-primary">Reset</button>
+                        <button type="button" onclick="submitCondi()" class="btn btn-success">Submit</button>
+                    </P>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+    <!-- Main JS -->
+    <script>
+
+        /* BALANCE */
+        var onDebug = false, compatibilityCheck = true;
+        var PTAVGP = { "1": 7000, "2": 1000, "3": 4500, "4": 3000, "5": 6500, "6": 2000, "7": 1500, "8": 1500, "9": 5000 };
+        var auto_build_order = [1, 5, 4, 6, 3, 7, 8, 2, 9];
+        var sumPTAVGP = sumobj(PTAVGP);
+        var PTPP = {};
+        Object.keys(PTAVGP).forEach(function (x) {
+            PTPP[x] = PTAVGP[x] / sumPTAVGP * 100;
+        });
+        //print(PTPP);
+        var over_price_rate = 2;
+        var part_type_limit = 10;
+
+        function print(x) {
+            if (onDebug) console.log(x);
+        }
+
+        // Get the modal
+        var prrt_modal = document.getElementById('prrtModal');
+        var condi_modal = document.getElementById('condiModal');
+
+        // Get the button that opens the modal
+        var prrtAdd_btn = document.getElementById("prrtAddBtn");
+        var condiAdd_btn = document.getElementById("condiAddBtn");
+
+        // Get the <span> element that closes the modal
+        var prrtspan = document.getElementById("prrtClose");
+        var condispan = document.getElementById("condiClose");
+
+        // When the user clicks on the button, open the modal 
+        prrtAdd_btn.onclick = function () {
+            prrt_modal.style.display = "block";
+        }
+        condiAdd_btn.onclick = function () {
+            condi_modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        prrtspan.onclick = function () {
+            prrt_modal.style.display = "none";
+        }
+        condispan.onclick = function () {
+            condi_modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == prrt_modal) {
+                prrt_modal.style.display = "none";
+            }
+            else if (event.target == condi_modal) {
+                condi_modal.style.display = "none";
+            }
+        }
+
+        var showB = document.getElementById("showBuild");
+
+        var slctTPrrt = document.getElementById("slctTypePrrt");
+        var prrtS = document.getElementById("prrtSlide");
+        var prrtSV = document.getElementById("prrtSlideV");
+        var prrtBox = document.getElementById("prrtAdjBox");
+        var budgetIP = document.getElementById("budgetInput");
+
+        var slctTCondi = document.getElementById("slctTypeCondi");
+        var slctACondi = document.getElementById("slctAttrCondi");
+        var slctXCondi = document.getElementById("slctXXCondi");
+        var slctVCondi = document.getElementById("slctValeCondi");
+        var conBox = document.getElementById("condiBox");
+
+        var prrtMin = 10, prrtMax = 1000, prrtMid = 100;
+        var opt_slctTPrrt, part_type_name = {};
+        var typePrrt = {};
+        var nprrt = prrtMid;
+        var prrtDisableTXT = "Please Select Part Type!"
+        prrtSV.value = prrtDisableTXT;
+
+        var minplogs = 0;
+        var maxplogs = 100;
+        var minvlogs = Math.log(prrtMin);
+        var maxvlogs = Math.log(prrtMax);
+        var scalelogs = (maxvlogs - minvlogs) / (maxplogs - minplogs);
+
+        var attr, data_attr, condition = {}, condition2 = {};
+        var value_to_text = {
+            'IS': 'IS', 'ISN': 'IS NOT', '==': '=', '<=': '&le;', '>=': '&ge;', '<': '&lt;', '>': '&gt;', '!=': '&ne;'
+        }
+
+        db('SELECT * from part_type_name', function (x) {
+            opt_slctTPrrt = x;
+
+            opt_slctTPrrt.forEach(function (i) {
+                part_type_name[i.part_type] = i.part_name;
+                condition[i.part_type] = {};
+                condition2[i.part_type] = {};
+                if (auto_build_order.indexOf(i.part_type) < 0) auto_build_order.push(i);
+            })
+
+            for (var i = 0; i < opt_slctTPrrt.length; i++) {
+                typePrrt[opt_slctTPrrt[i].part_type] = prrtMid;
+
+                var option = document.createElement("option");
+                option.value = opt_slctTPrrt[i].part_type;
+                option.text = opt_slctTPrrt[i].part_name;
+                slctTPrrt.appendChild(option);
+
+                var option2 = document.createElement("option");
+                option2.value = opt_slctTPrrt[i].part_type;
+                option2.text = opt_slctTPrrt[i].part_name;
+                slctTCondi.appendChild(option2);
+            }
+        });
+
+        // function-----------------------------------prrt
+        slctTPrrt.onchange = function () {
+            if (slctTPrrt.value != "") {
+                prrtS.disabled = false;
+                prrtSV.disabled = false;
+                prrtSV.value = nprrt;
+            } else {
+                prrtS.disabled = true;
+                prrtSV.disabled = true;
+                prrtSV.value = prrtDisableTXT;
+            }
+        }
+        prrtS.oninput = function () {
+            nprrt = rlogslider(this.value)
+            prrtSV.value = nprrt;
+
+        }
+        prrtSV.onchange = function () {
+            if (!isNormalInteger(prrtSV.value)) {
+                alert("แน่่น่น่น่น่น่น่น่น");
+                setPrrt(100);
+            }
+            else setPrrt(Number(prrtSV.value));
+        }
+        // function-----------------------------------condi
+        slctTCondi.onchange = function () {
+            slctACondi.innerHTML = "<option disabled selected value> -- select an option -- </option>";
+            slctXCondi.innerHTML = "<option disabled selected value> X </option>";
+
+            slctACondi.value = "";
+            slctXCondi.value = "";
+            reVCondi();
+
+            if (slctTCondi.value != "") {
+                db("SELECT * FROM part WHERE part_type = " + slctTCondi.value + " LIMIT 1", function (x) {
+                    attr = x[0];
+                    addPartBrand(attr);
+                    data_attr = attr.part_data;
+                    crackPartData(attr);
+
+                    Object.keys(attr).forEach(function (a) {
+                        if (a != 'part_type' && a != 'part_id') {
+                            var option = document.createElement("option");
+                            option.value = a;
+                            option.text = a;
+                            slctACondi.appendChild(option);
+                        }
+                    });
+                });
+
+                // Enable something
+                slctACondi.disabled = false;
+                slctXCondi.disabled = true;
+                slctVCondi.disabled = true;
+            } else {
+                // Disable something
+                slctACondi.disabled = true;
+                slctXCondi.disabled = true;
+                slctVCondi.disabled = true;
+            }
+        }
+        slctACondi.onchange = function () {
+            reVCondi();
+            if (slctACondi.value == "") return;
+            if (isNaN(attr[slctACondi.value])) {
+                slctXCondi.innerHTML = "<option disabled selected value> X </option>";
+                slctXCondi.innerHTML += "<option value='IS'> IS </option>";
+                slctXCondi.innerHTML += "<option value='ISN'> IS NOT </option>";
+            } else {
+                slctXCondi.innerHTML = "<option disabled selected value> X </option>";
+                slctXCondi.innerHTML += "<option value='=='> = </option>";
+                slctXCondi.innerHTML += "<option value='<='> &le; </option>";
+                slctXCondi.innerHTML += "<option value='>='> &ge; </option>";
+                slctXCondi.innerHTML += "<option value='<'> &lt; </option>";
+                slctXCondi.innerHTML += "<option value='>'> &gt; </option>";
+                slctXCondi.innerHTML += "<option value='!='> &ne; </option>";
+            }
+            slctXCondi.disabled = false;
+            slctVCondi.disabled = false;
+        };
+        function reVCondi() {
+            slctVCondi.value = "";
+            var cdp = document.getElementById("condiPar");
+            if (slctACondi.value == "" || isNaN(attr[slctACondi.value])) {
+                if (slctACondi.value != "") {
+                    var load;
+                    if (data_attr[slctACondi.value]) {
+                        load = "SELECT part_data->'" + slctACondi.value + "' FROM part WHERE part_type=" + slctTCondi.value + " GROUP BY part_data->'" + slctACondi.value + "' ORDER BY part_data->'" + slctACondi.value + "'";
+                    } else if (slctACondi.value == 'part_brand') {
+                        load = "SELECT part_name FROM part WHERE part_type=" + slctTCondi.value + " GROUP BY part_name ORDER BY part_name";
+                    } else {
+                        load = "SELECT " + slctACondi.value + " FROM part WHERE part_type=" + slctTCondi.value + " GROUP BY " + slctACondi.value + " ORDER BY " + slctACondi.value;
+                    }
+                    db(load, function (l) {
+                        if (slctACondi.value == 'part_brand') {
+                            l.forEach(i => {
+                                addPartBrand(i);
+                                delete i.part_name;
+                            });
+                            l = groupToList(l);
+                            l = removeRepeat(l);
+                        } else l = groupToList(l);
+                        setVCoption(l);
+                    });
+                }
+                if (slctVCondi.tagName == "SELECT") return;
+                cdp.removeChild(slctVCondi);
+                var ch = document.createElement('select');
+                ch.className = "form-control";
+                ch.id = "slctValeCondi";
+                ch.style = "width: 39%;display: inline-block;";
+                if (slctACondi.value == "") ch.disabled = true;
+                ch.innerHTML = "<option disabled selected value> Value </option>"
+
+                slctVCondi = ch;
+                cdp.appendChild(ch);
+            }
+            else {
+                if (slctVCondi.tagName == "INPUT") {
+                    slctVCondi.step = Math.pow(10, Math.round(attr[slctACondi.value]).toString().length - 2);
+                    return;
+                }
+                cdp.removeChild(slctVCondi);
+                var ch = document.createElement('input');
+                ch.type = "number";
+                ch.step = Math.pow(10, Math.round(attr[slctACondi.value]).toString().length - 2);
+                ch.id = "slctValeCondi";
+                ch.placeholder = " Value ";
+                ch.style = "width: 39%;";
+
+                slctVCondi = ch;
+                cdp.appendChild(ch);
+            }
+        }
+        function setVCoption(l) {
+            slctVCondi.innerHTML = "<option disabled selected value> Value </option>"
+            l.forEach(i => {
+                var option = document.createElement("option");
+                option.value = i;
+                option.text = i;
+                slctVCondi.appendChild(option);
+            });
+        }
+
+        /* Auto Build ---------------------------------------------------------------------------------------*/
+        function auto_build() {
+            if (!isNormalInteger(budgetIP.value)) {
+                alert("ใส่ Budget ให้ถูกต้อง")
+                return;
+            }
+            var TPS = sumobj(typePrrt);
+            var PTPOP = {};
+            var PART = {};
+            Object.keys(PTPP).forEach(function (x) {
+                PTPOP[x] = budgetIP.value * PTPP[x] / 100 * typePrrt[x] / TPS * Object.keys(typePrrt).length * over_price_rate;
+                var slct = 'SELECT * from part WHERE ';
+                slct += 'part_type = ' + x;
+                slct += ' AND part_price <= ' + Math.round(PTPOP[x]);
+                slct += ' ORDER BY part_score DESC';
+                db(slct, function (ans) {
+                    for (var i = 0; i < ans.length; i++) {
+                        ans[i] = crackPartData(ans[i]);
+                        addPartBrand(ans[i]);
+                    }
+                    PART[x] = ans;
+                })
+            });
+            print(PTPOP);
+
+            var observerInterval = setInterval(function () {
+                if (Object.keys(PART).length == Object.keys(part_type_name).length) {
+                    clearInterval(observerInterval);
+                    print(PART);
+                    var out = false;
+                    Object.keys(PART).forEach(function (e) {
+                        if (PART[e].length == 0) {
+                            alert("ไม่มีงบพอที่จะซื้อ" + part_type_name[e] + "ที่เหมาะสมได้");
+                            showB.innerHTML = "";
+                            out = true;
+                            return;
+                        }
+                    })
+                    if (out) return;
+                    maxScore = 0;
+                    var bestMID = findBestMatch(budgetIP.value, auto_build_order, PART);
+                    var aBUILD = {}, sumprice = 0, sumscore = 0;
+                    if (!bestMID) {
+                        alert("ไม่สามารถหาbuildที่เหมาะสมได้");
+                        showB.innerHTML = "";
+                        return;
+                    }
+                    Object.keys(bestMID).forEach(function (k) {
+                        aBUILD[k] = findByKey(PART[k], "part_id", bestMID[k]);
+                        sumprice += parseFloat(aBUILD[k].part_price);
+                        sumscore += aBUILD[k].part_score;
+                    })
+                    aBUILD.price = sumprice;
+                    aBUILD.score = sumscore;
+                    print(aBUILD);
+                    printBuild(aBUILD);
+                }
+            }, 10);
+        }
+        function printBuild(aBUILD) {
+            showB.innerHTML = "";
+            for (var tt in part_type_name) {
+                var divv = document.createElement('div');
+                divv.className = "partBox";
+
+                divv.ppp = aBUILD[tt];
+                divv.innerHTML = part_type_name[tt] + " -> " + aBUILD[tt].part_name + "<br>";
+                divv.innerHTML += "Price : " + aBUILD[tt].part_price + "<br>";
+                divv.innerHTML += "Score : " + aBUILD[tt].part_score;
+                divv.innerHTML += '<a style="float: right;margin-left:auto; margin-right:0;" onclick="openPart(this)">o</a><br>';
+
+                showB.appendChild(divv);
+            }
+            var bott = document.createElement('div');
+            bott.style = "color:whitesmoke;";
+            bott.innerHTML += "Total Price : " + aBUILD.price + "<br>";
+            bott.innerHTML += "Total Score : " + aBUILD.score + "<br>";
+            showB.appendChild(bott);
+        }
+        function openPart(x) {
+            console.log(x.parentElement.ppp);
+        }
+
+        var maxScore = 0;
+        var cpu;
+        function findBestMatch(bdg, keyy, PART) {
+            //print(keyy);
+            if (keyy.length == 0) return {};
+            var a = {}, sa;
+            var best;
+            var cc = 2;
+            search: for (var j = 0; j < PART[keyy[0]].length; j++) {
+
+                var i = PART[keyy[0]][j];
+                // condition
+                for (var ka in condition[keyy[0]]) {
+                    if (condition[keyy[0]][ka].length == 1 && (condiCheck(i, condition[keyy[0]][ka][0]) == false)) continue search;
+                    else {
+                        if (condition[keyy[0]][ka].length > 1 && condiCheck(i, condition[keyy[0]][ka][0].x == 'ISN')) {
+                            for (var kx = 0; kx < condition[keyy[0]][ka].length; kx++) {
+                                if (!(condiCheck(i, condition[keyy[0]][ka][0]))) continue search;
+                            }
+                        }
+                        if (condition[keyy[0]][ka].length > 1 && condiCheck(i, condition[keyy[0]][ka][0].x == 'IS')) {
+                            var all = false;
+                            for (var kx = 0; kx < condition[keyy[0]][ka].length; kx++) {
+                                if (condiCheck(i, condition[keyy[0]][ka][0])) {
+                                    all = true;
+                                    break;
+                                }
+                            }
+                            if (!all) continue search;
+                        }
+                    }
+
+                }
+                if (compatibilityCheck) {
+                    for (var ka in condition2[keyy[0]]) {
+                        if (condition2[keyy[0]][ka].length == 1 && (condiCheck(i, condition2[keyy[0]][ka][0]) == false)) {
+                            if (keyy[0] == 7) {
+                                console.log(i);
+                                console.log(condition2[keyy[0]][ka][0]);
+                            }
+                            continue search;
+                        }
+                        else {
+                            if (condition2[keyy[0]][ka].length > 1 && condiCheck(i, condition2[keyy[0]][ka][0].x == 'ISN')) {
+                                for (var kx = 0; kx < condition2[keyy[0]][ka].length; kx++) {
+                                    if (!(condiCheck(i, condition2[keyy[0]][ka][0]))) continue search;
+                                }
+                            }
+                            if (condition2[keyy[0]][ka].length > 1 && condiCheck(i, condition2[keyy[0]][ka][0].x == 'IS')) {
+                                var all = false;
+                                for (var kx = 0; kx < condition2[keyy[0]][ka].length; kx++) {
+                                    if (condiCheck(i, condition2[keyy[0]][ka][0])) {
+                                        all = true;
+                                        break;
+                                    }
+                                }
+                                if (!all) continue search;
+                            }
+                        }
+                    }
+                }
+
+                if (cc <= 0) break;
+                cc--;
+
+                //print(keyy.length);
+                if (bdg - i.part_price < 0) continue;
+                a = {};
+                a[i.part_type] = i.part_id;
+                if (keyy.length > 1) {
+
+                    var buCont;
+                    if (compatibilityCheck) {
+                        buCont = JSON.parse(JSON.stringify(condition2));
+                        if (keyy[0] == 1) cpu = i;
+                        if (keyy[0] == 1) addCondition2(3, 'socket', 'IS', i.socket);
+                        if (keyy[0] == 4) addCondition2(3, 'ram_speed', '>=', i.speed);
+                        if (keyy[0] == 6 && i.interface == "m.2") addCondition2(3, 'm_dot2', '>', 0);
+                        if (keyy[0] == 5) addCondition2(8, 'gpu_length', '>=', parseInt(i.length));
+                        if (keyy[0] == 5) addCondition2(7, 'wattage', '>=', 100 + parseInt(i.tdp) + parseInt(cpu.tdp));
+                        if (keyy[0] == 4) addCondition2(3, 'capacity', '>=', i.capacity);
+                    }
+                    var b = findBestMatch(bdg - i.part_price, (keyy.slice()).splice(1), PART);
+                    if (compatibilityCheck) condition2 = buCont;
+
+                    //print(b);
+                    a = extend(a, b);
+                }
+                //print(Object.keys(a).length + "-" + keyy);
+                if (Object.keys(a).length == keyy.length) {
+                    sa = 0;
+                    Object.keys(a).forEach(function (t) {
+                        sa += findByKey(PART[t], "part_id", a[t]).part_score;
+                    })
+                    //print(sa);
+                    if (sa > maxScore) {
+                        maxScore = sa;
+                        best = a;
+                    }
+                }
+            }
+            return best;
+        }
+        function condiCheck(p, con) {
+            if (con.x == 'IS') return p[con.a] == con.v;
+            else if (con.x == 'ISN') return p[con.a] != con.v;
+            else {
+                var pp = parseFloat(p[con.a]), vv = parseFloat(con.v);
+                if (con.x == '==') return pp == vv;
+                if (con.x == '>=') return pp >= vv;
+                if (con.x == '<=') return pp <= vv;
+                if (con.x == '>') return pp > vv;
+                if (con.x == '<') return pp < vv;
+                if (con.x == '!=') return pp != vv;
+            } return false;
+        }
+
+        //funtion---------------------------------------------------help
+        function extend(target) {
+            var sources = [].slice.call(arguments, 1);
+            sources.forEach(function (source) {
+                for (var prop in source) {
+                    target[prop] = source[prop];
+                }
+            });
+            return target;
+        }
+        function findByKey(list, key, at) {
+            for (var i = 0; i < list.length; i++) {
+                if (list[i][key] == at) {
+                    return list[i];
+                }
+            }
+        }
+        function crackPartData(part) {
+            part = extend(part, part.part_data);
+            delete part.part_data;
+            return part;
+        }
+        function addPartBrand(part) {
+            part.part_brand = part.part_name.split(" ")[0];
+        }
+        function removeRepeat(a) {
+            return a.filter(function (item, pos) {
+                return a.indexOf(item) == pos;
+            });
+        }
+        function nameTypeList(l) {
+            l.forEach(function (i) {
+                i.part_type = part_type_name[i.part_type];
+            })
+        }
+        function groupToList(l) {
+            x = [];
+            l.forEach(function (i) {
+                for (var key in i) x.push(i[key]);
+            })
+            return x;
+        }
+        function sumobj(obj) {
+            var sum = 0;
+            for (var el in obj) {
+                if (obj.hasOwnProperty(el)) {
+                    sum += parseFloat(obj[el]);
+                }
+            }
+            return sum;
+        }
+
+        //Button------------------------------------Prrt
+        resetPrrt();
+
+        function resetPrrt() {
+            setPrrt(prrtMid);
+
+            document.getElementById("prrtForm").reset();
+            prrtS.disabled = true;
+            prrtSV.disabled = true;
+            prrtSV.value = prrtDisableTXT;
+        }
+        function setPrrt(x) {
+            if (x > prrtMax) {
+                setPrrt(prrtMax);
+                alert("เกินหน้าเกินตาจัง เอา" + prrtMax + "พอนะ");
+                return;
+            }
+            if (x < prrtMin) {
+                setPrrt(prrtMin);
+                alert("มักน้อยจัง เอา" + prrtMin + "แทนนะ");
+                return;
+            }
+            nprrt = x;
+            if (slctTPrrt.value != "") prrtSV.value = nprrt;
+            prrtS.value = logposition(x);
+        }
+        function submitPrrt() {
+            if (slctTPrrt.value == "") {
+                alert("เลือกก่อนนะ");
+                return;
+            }
+
+            var cc = null;
+            prrtBox.childNodes.forEach(function (C) {
+                if (C.pt == slctTPrrt.value) cc = C;
+            })
+            if (cc != null) prrtBox.removeChild(cc);
+
+            var divv = document.createElement('div');
+            divv.pt = slctTPrrt.value;
+            divv.innerHTML = "<h3 style='display: inline'>" + part_type_name[slctTPrrt.value] + " " + nprrt + "%</h3>";
+            divv.innerHTML += '<a style="float: right;margin-left:auto; margin-right:0;" class="close" onclick="delPrrtDiv(this)">&times;</a>';
+            prrtBox.appendChild(divv);
+
+            typePrrt[slctTPrrt.value] = nprrt;
+
+            prrt_modal.style.display = "none";
+            resetPrrt();
+        }
+        function delPrrtDiv(x) {
+            var divv = x.parentElement;
+            typePrrt[divv.pt] = prrtMid;
+            prrtBox.removeChild(divv);
+        }
+
+        //Button------------------------------------Condi
+        function resetCondi() {
+            document.getElementById("condiForm").reset();
+            slctACondi.disabled = true;
+            slctXCondi.disabled = true;
+            slctVCondi.disabled = true;
+        }
+        function submitCondi() {
+            if (slctVCondi.value == "" || slctXCondi.value == "" || slctACondi.value == "" || slctTCondi.value == "") {
+                alert("เลือกก่อนนะ");
+                return;
+            }
+
+            addCondition(slctTCondi.value, slctACondi.value, slctXCondi.value, slctVCondi.value);
+            printCondi();
+
+            condi_modal.style.display = "none";
+            resetCondi();
+        }
+        function addCondition(t, a, x, v) {
+            var con = { 't': t, 'a': a, 'x': x, 'v': v };
+            if (condition[t][a]) {
+                if (x == 'IS') condition[t][a] = condition[t][a].filter(i => { return i.x == "IS" && !(i.t == t && i.a == a && i.v == v) });
+                else if (x == 'ISN') condition[t][a] = condition[t][a].filter(i => { return i.x == "ISN" && !(i.t == t && i.a == a && i.v == v) });
+                else condition[t][a] = [];
+            } else condition[t][a] = [];
+            condition[t][a].push(con);
+        }
+        function addCondition2(t, a, x, v) {
+            var con = { 't': t, 'a': a, 'x': x, 'v': v };
+            if (condition2[t][a]) {
+                if (x == 'IS') condition2[t][a] = condition2[t][a].filter(i => { return i.x == "IS" && !(i.t == t && i.a == a && i.v == v) });
+                else if (x == 'ISN') condition2[t][a] = condition2[t][a].filter(i => { return i.x == "ISN" && !(i.t == t && i.a == a && i.v == v) });
+                else condition2[t][a] = [];
+            } else condition2[t][a] = [];
+            condition2[t][a].push(con);
+        }
+        function printCondi() {
+            conBox.innerHTML = "";
+            for (var kt in condition) {
+                if (Object.keys(condition[kt]).length == 0) continue;
+                var hh1 = document.createElement('h1');
+                hh1.innerHTML = part_type_name[kt];
+                conBox.appendChild(hh1);
+
+                for (var ka in condition[kt]) {
+                    for (var i = 0; i < condition[kt][ka].length; i++) {
+                        var divv = document.createElement('div');
+                        divv.condi = condition[kt][ka][i];
+                        var txt = ka + " " + value_to_text[condition[kt][ka][i].x] + " " + condition[kt][ka][i].v;
+                        if (i > 0) {
+                            if (condition[kt][ka][i].x == 'IS') txt = "OR " + txt;
+                            if (condition[kt][ka][i].x == 'ISN') txt = "AND " + txt;
+                        }
+                        divv.innerHTML = "<h3 style='display: inline'>&nbsp; &nbsp; &nbsp;" + txt + "</h3>";
+                        divv.innerHTML += '<a style="float: right;margin-left:auto; margin-right:0;" class="close" onclick="delCondiv(this)">&times;</a>';
+                        conBox.appendChild(divv);
+                    }
+                }
+            }
+        }
+        function delCondi(con) {
+            condition[con.t][con.a] = condition[con.t][con.a].filter(i => { return i != con });
+            if (condition[con.t][con.a].length == 0) delete condition[con.t][con.a];
+        }
+        function delCondi2(con) {
+            condition2[con.t][con.a] = condition2[con.t][con.a].filter(i => { return i != con });
+            if (condition2[con.t][con.a].length == 0) delete condition2[con.t][con.a];
+        }
+        function delCondiv(x) {
+            delCondi(x.parentElement.condi);
+            printCondi();
+        }
+
+        function logslider(position) {
+            return Math.exp(minvlogs + scalelogs * (position - minplogs));
+        }
+        function rlogslider(position) {
+            return Math.round(logslider(position));
+        }
+        function logposition(value) {
+            return (Math.log(value) - minvlogs) / scalelogs + minplogs;
+        }
+        function isNormalInteger(str) {
+            var n = Math.floor(Number(str));
+            return n !== Infinity && String(n) === str && n >= 0;
+        }
+    </script>
+</body>
+
+</html>
