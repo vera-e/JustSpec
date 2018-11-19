@@ -1,5 +1,31 @@
 <% include partials/header %>
 <div class="container">
+    <% var stringToShow = ""; %>
+    <% var partType = part_data[0].part_type; %>
+    <% console.log(partType); %>
+    <% console.log(typeof(partType)); %>
+    <% if (partType == 1 ) { %> 
+        <% stringToShow += "CPU"; %>
+    <% } else if (partType == 2) { %>
+        <% stringToShow += "CPU Cooler"; %>
+    <% } else if (partType == 3) { %>
+        <% stringToShow += "Motherboard" %>
+    <% } else if (partType == 4) { %>
+        <% stringToShow += "Memory" %>
+    <% } else if (partType == 5) { %>
+        <% stringToShow += "Video Card"; %>
+    <% } else if (partType == 6) { %>
+        <% stringToShow += "Storage"; %>
+    <% } else if (partType == 7) { %>
+        <% stringToShow += "Power Supply"; %>
+    <% } else if (partType == 8) { %>
+        <% stringToShow += "Case"; %>
+    <% } else if (partType == 9) { %>
+        <% stringToShow += "Monitor"; %>
+    <% } %>
+    <h2>Choose A 
+        <%= stringToShow %>
+    </h2>
     <table class="table">
         <thead>
             <tr>

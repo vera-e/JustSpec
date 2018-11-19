@@ -3,159 +3,173 @@
 <% try { %>
 <% console.log(part_data) %>
 <% var foobar = [0,0,0,0,0,0,0,0,0]; %>
+<% var sumPrice = 0 %>
+<% var sumScore = 0 %>
 <% part_data.forEach( function(eachPart) { %>
 <% foobar[eachPart.part_type - 1] = 1 %>
+<% sumPrice += Number(eachPart.part_price) %>
+<% sumScore += Number(eachPart.part_score) %>
 <% }) %>
 <%  console.log(foobar) %>
 <% console.log(part_data.find(x => x.part_type == 2)) %>
 <div class="container">
-    <table class="table">
-        <tbody>
-            <tr>
-                <td>Part</td>
-                <td>Selection</td>
-                <td>Price</td>
-            </tr>
-            <tr>
-                <td>CPU</td>
-                <% if (foobar[0]) { %>
-                <% cpuData =  part_data.find(x => x.part_type == 1) %>
-                <td>
-                    <%= cpuData.part_name %>
-                </td>
-                <td>
-                    <%= cpuData.part_price + " Baht"%>
-                </td>
-                <% } else { %>
-                <td><a href="/product/cpu" class="btn btn-primary">Choose A CPU</a></td>
-                <td>&nbsp;</td>
-                <% } %>
-            </tr>
-            <tr>
-                <td>CPU Cooler</td>
-                <% if (foobar[1]) { %>
-                <% cpucoolerData =  part_data.find(x => x.part_type == 2) %>
-                <td>
-                    <%= cpucoolerData.part_name %>
-                </td>
-                <td>
-                    <%= cpucoolerData.part_price + " Baht"%>
-                </td>
-                <% } else { %>
-                <td><a href="/product/cpu-cooler" class="btn btn-primary">Coose A CPU Cooler</a></td>
-                <td>&nbsp;</td>
-                <% } %>
-            </tr>
-            <tr>
-                <td>Motherboard</td>
-                <% if (foobar[2]) { %>
-                <% motherData =  part_data.find(x => x.part_type == 3) %>
-                <td>
-                    <%= motherData.part_name %>
-                </td>
-                <td>
-                    <%= motherData.part_price + " Baht"%>
-                </td>
-                <% } else { %>
-                <td><a href="/product/motherboard" class="btn btn-primary">Choose A Motherboard</a></td>
-                <td>&nbsp;</td>
-                <% } %>
-            </tr>
-            <tr>
-                <td>Memory</td>
-                <% if (foobar[3]) { %>
-                <% ramData =  part_data.find(x => x.part_type == 4) %>
-                <td>
-                    <%= ramData.part_name %>
-                </td>
-                <td>
-                    <%= ramData.part_price + " Baht"%>
-                </td>
-                <% } else { %>
-                <td><a href="/product/ram" class="btn btn-primary">Choose Memory<a></td>
-                <td>&nbsp;</td>
-                <% } %>
-            </tr>
-            <tr>
-                <td>Video Card</td>
-                <% if (foobar[4]) { %>
-                <% gpuData =  part_data.find(x => x.part_type == 5) %>
-                <td>
-                    <%= gpuData.part_name %>
-                </td>
-                <td>
-                    <%= gpuData.part_price + " Baht"%>
-                </td>
-                <% } else { %>
-                <td><a href="/product/gpu" class="btn btn-primary">Choose A Video Card</a></td>
-                <td>&nbsp;</td>
-                <% } %>
+    <h2>Let's Build Computer</h2>
+    <form form-group>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>Part</td>
+                    <td>Selection</td>
+                    <td>Price</td>
+                </tr>
+                <tr>
+                    <td>CPU</td>
+                    <% if (foobar[0]) { %>
+                    <% cpuData =  part_data.find(x => x.part_type == 1) %>
+                    <td>
+                        <%= cpuData.part_name %>
+                    </td>
+                    <td>
+                        <%= cpuData.part_price + " Baht"%>
+                    </td>
+                    <% } else { %>
+                    <td><a href="/product/cpu" class="btn btn-primary">Choose A CPU</a></td>
+                    <td>&nbsp;</td>
+                    <% } %>
+                </tr>
+                <tr>
+                    <td>CPU Cooler</td>
+                    <% if (foobar[1]) { %>
+                    <% cpucoolerData =  part_data.find(x => x.part_type == 2) %>
+                    <td>
+                        <%= cpucoolerData.part_name %>
+                    </td>
+                    <td>
+                        <%= cpucoolerData.part_price + " Baht"%>
+                    </td>
+                    <% } else { %>
+                    <td><a href="/product/cpu-cooler" class="btn btn-primary">Coose A CPU Cooler</a></td>
+                    <td>&nbsp;</td>
+                    <% } %>
+                </tr>
+                <tr>
+                    <td>Motherboard</td>
+                    <% if (foobar[2]) { %>
+                    <% motherData =  part_data.find(x => x.part_type == 3) %>
+                    <td>
+                        <%= motherData.part_name %>
+                    </td>
+                    <td>
+                        <%= motherData.part_price + " Baht"%>
+                    </td>
+                    <% } else { %>
+                    <td><a href="/product/motherboard" class="btn btn-primary">Choose A Motherboard</a></td>
+                    <td>&nbsp;</td>
+                    <% } %>
+                </tr>
+                <tr>
+                    <td>Memory</td>
+                    <% if (foobar[3]) { %>
+                    <% ramData =  part_data.find(x => x.part_type == 4) %>
+                    <td>
+                        <%= ramData.part_name %>
+                    </td>
+                    <td>
+                        <%= ramData.part_price + " Baht"%>
+                    </td>
+                    <% } else { %>
+                    <td><a href="/product/ram" class="btn btn-primary">Choose Memory<a></td>
+                    <td>&nbsp;</td>
+                    <% } %>
+                </tr>
+                <tr>
+                    <td>Video Card</td>
+                    <% if (foobar[4]) { %>
+                    <% gpuData =  part_data.find(x => x.part_type == 5) %>
+                    <td>
+                        <%= gpuData.part_name %>
+                    </td>
+                    <td>
+                        <%= gpuData.part_price + " Baht"%>
+                    </td>
+                    <% } else { %>
+                    <td><a href="/product/gpu" class="btn btn-primary">Choose A Video Card</a></td>
+                    <td>&nbsp;</td>
+                    <% } %>
 
-            </tr>
-            <tr>
-                <td>Storage</td>
-                <% if (foobar[5]) { %>
-                <% storageData =  part_data.find(x => x.part_type == 6) %>
-                <td>
-                    <%= storageData.part_name %>
-                </td>
-                <td>
-                    <%= storageData.part_price + " Baht"%>
-                </td>
-                <% } else { %>
-                <td><a href="/product/storage" class="btn btn-primary">Choose Storage</a></td>
-                <td>&nbsp;</td>
-                <% } %>
+                </tr>
+                <tr>
+                    <td>Storage</td>
+                    <% if (foobar[5]) { %>
+                    <% storageData =  part_data.find(x => x.part_type == 6) %>
+                    <td>
+                        <%= storageData.part_name %>
+                    </td>
+                    <td>
+                        <%= storageData.part_price + " Baht"%>
+                    </td>
+                    <% } else { %>
+                    <td><a href="/product/storage" class="btn btn-primary">Choose Storage</a></td>
+                    <td>&nbsp;</td>
+                    <% } %>
 
-            </tr>
-            <tr>
-                <td>Power Supply</td>
-                <% if (foobar[6]) { %>
-                <% psuData =  part_data.find(x => x.part_type == 7) %>
-                <td>
-                    <%= psuData.part_name %>
-                </td>
-                <td>
-                    <%= psuData.part_price + " Baht"%>
-                </td>
-                <% } else { %>
-                <td><a href="/product/psu" class="btn btn-primary">Choose A Power Supply</a></td>
-                <td>&nbsp;</td>
-                <% } %>
-            </tr>
-            <tr>
-                <td>Case</td>
-                <% if (foobar[7]) { %>
-                <% caseData =  part_data.find(x => x.part_type == 8) %>
-                <td>
-                    <%= caseData.part_name %>
-                </td>
-                <td>
-                    <%= caseData.part_price + " Baht"%>
-                </td>
-                <% } else { %>
-                <td><a href="/product/case" class="btn btn-primary">Choose A Case</a></td>
-                <td>&nbsp;</td>
-                <% } %>
-            </tr>
-            <tr>
-                <td>Moniter</td>
-                <% if (foobar[8]) { %>
-                <% displayData =  part_data.find(x => x.part_type == 9) %>
-                <td>
-                    <%= displayData.part_name %>
-                </td>
-                <td>
-                    <%= displayData.part_price + " Baht"%>
-                </td>
-                <% } else { %>
-                <td><a href="/product/display" class="btn btn-primary">Choose A Moniter</a></td>
-                <td>&nbsp;</td>
-                <% } %>
+                </tr>
+                <tr>
+                    <td>Power Supply</td>
+                    <% if (foobar[6]) { %>
+                    <% psuData =  part_data.find(x => x.part_type == 7) %>
+                    <td>
+                        <%= psuData.part_name %>
+                    </td>
+                    <td>
+                        <%= psuData.part_price + " Baht"%>
+                    </td>
+                    <% } else { %>
+                    <td><a href="/product/psu" class="btn btn-primary">Choose A Power Supply</a></td>
+                    <td>&nbsp;</td>
+                    <% } %>
+                </tr>
+                <tr>
+                    <td>Case</td>
+                    <% if (foobar[7]) { %>
+                    <% caseData =  part_data.find(x => x.part_type == 8) %>
+                    <td>
+                        <%= caseData.part_name %>
+                    </td>
+                    <td>
+                        <%= caseData.part_price + " Baht"%>
+                    </td>
+                    <% } else { %>
+                    <td><a href="/product/case" class="btn btn-primary">Choose A Case</a></td>
+                    <td>&nbsp;</td>
+                    <% } %>
+                </tr>
+                <tr>
+                    <td>Moniter</td>
+                    <% if (foobar[8]) { %>
+                    <% displayData =  part_data.find(x => x.part_type == 9) %>
+                    <td>
+                        <%= displayData.part_name %>
+                    </td>
+                    <td>
+                        <%= displayData.part_price + " Baht"%>
+                    </td>
+                    <% } else { %>
+                    <td><a href="/product/display" class="btn btn-primary">Choose A Moniter</a></td>
+                    <td>&nbsp;</td>
+                    <% } %>
 
-            </tr>
-        </tbody>
-    </table>
+                </tr>
+                <tr>
+                    <td colspan="2">Sum Price</td>
+                    <td>
+                        <%= sumPrice  + " Baht"%>
+                    </td>
+                    <td>&nbsp;</td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
 </div>
 <% } catch (e) { %>
 <% if (e instanceof ReferenceError) { %>

@@ -14,7 +14,7 @@ const pg = new Client({
     host: '127.0.0.1',
     database: 'justspec',
     password: 'corgi',
-    port: '5433'
+    port: '5432'
 });
 
 pg.connect();
