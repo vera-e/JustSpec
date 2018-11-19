@@ -1,0 +1,35 @@
+<% include partials/header %>
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Score</th>
+                <!-- <th scope="col">Speed</th> -->
+            </tr>
+        </thead>
+        <tbody>
+            <% part_data.forEach( function(eachPart) { %>
+            <tr>
+                <th scope="row">
+                    <%= eachPart.part_name %>
+                </th>
+                <td>
+                    <%= eachPart.part_price %>
+                </td>
+                <td>
+                    <%= eachPart.part_score %>
+                </td>
+                <!-- <td><%= eachPart.part_data.speed %></td> -->
+                <td>
+                    <form action="/list?type=<%= eachPart.part_type %>&id=<%= eachPart.part_id %>" method="post">
+                        <button type="submit" name="part" class="btn btn-primary">Add</button>
+                    </form>
+                </td>
+                <% }); %>
+            <tr>
+        </tbody>
+    </table>
+</div>
+<% include partials/footer %>

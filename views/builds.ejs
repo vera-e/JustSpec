@@ -1,51 +1,61 @@
-<!-- <% include partials/header %>
+<!-- <%- JSON.stringify(computer_builds) %> -->
+
+<% include partials/header %>
 <div class="container">
-    <table class="table">
+    <table class="table table.table-bordered">
         <thead>
             <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Name</th>
+                <th scope="col">Build</th>
+                <th scope="col">Component</th>
                 <th scope="col">Price</th>
+                <!-- <th scope="col">Speed</th> -->
             </tr>
         </thead>
         <tbody>
-            <% computer_builds.forEach( function(eachBuilds) { %>
+            <% var currentBuild = -1; %>
+            <% var totalScore = 0 %>
+            <% computer_builds.forEach((build) => { %>
+            <% if (currentBuild != build.build_id) { %>
             <tr>
-                <th scope="row" rowspan="4">
-                    <%= eachBuilds.build_id %>
+                <th rowspan="3">
+                    <%= build.build_name %>
+                </th>
+                <% if (build.part_type === 1) { %>
+                <td>
+                    <%= build.part_name %>
+                </td>
+                <% } %>
+                <th>
+                    <%= build.build_price %>
                 </th>
                 <td>
-                    <%= eachBuilds.build_name %>
+                    <button class="btn btn-primary" type="submit ">Add</button>
                 </td>
-                <td rowspan="4">
-                    <%= eachBuilds.build_price %>
-                </td>
-            <tr>
-            <tr>
-                <th></th>
-                <td>
-                    <%= eachBuilds.build_data.cpu.part_name %>
-                </td>
-                <td></td>
             </tr>
+            <% currentBuild = build.build_id %>
+            <% var totalScore = 0 %>
+            <% } %>
+
+
+            <% if (build.part_type === 4) { %>
             <tr>
-                <th></th>
                 <td>
-                    <%= eachBuilds.build_data.gpu.part_name %>
+                    <%= build.part_name %>
                 </td>
-                <td></td>
             </tr>
+            <% } %>
+
+            <% if (build.part_type === 5) { %>
             <tr>
-                <th></th>
                 <td>
-                    <%= eachBuilds.build_data.ram.part_name %>
+                    <%= build.part_name %>
                 </td>
-                <td></td>
             </tr>
+            <% } %>
+
+            <% }); %>
+
         </tbody>
-        <% }); %>
     </table>
 </div>
-<% include partials/footer %> -->
-
-<%- JSON.stringify(computer_builds) %>
+<% include partials/footer %>
