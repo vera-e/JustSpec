@@ -14,7 +14,7 @@ const pg = new Client({
     host: '127.0.0.1',
     database: 'justspec',
     password: 'corgi',
-    port: '5432'
+    port: '5433'
 });
 
 pg.connect();
@@ -24,6 +24,9 @@ app.get('/', function (req, res) {
 })
 
 app.get('/list', function (req, res) {
+    console.log(req.path);
+    if (req.path == '/addbuild') {
+    }
     textQuery = "";
     if (req.cookies.cpu != undefined) {
         if (textQuery != '') {
@@ -50,6 +53,11 @@ app.get('/list', function (req, res) {
             textQuery += ' UNION '
         }
         textQuery += 'SELECT * from part WHERE part_id = ' + req.cookies.gpu;
+    } if (req.cookies.storage != undefined) {
+        if (textQuery != '') {
+            textQuery += ' UNION '
+        }
+        textQuery += 'SELECT * from part WHERE part_id = ' + req.cookies.storage;
     } if (req.cookies.psu != undefined) {
         if (textQuery != '') {
             textQuery += ' UNION '
@@ -100,6 +108,9 @@ app.post('/list', function (req, res) {
             break;
         case '5':
             textPart = 'gpu';
+            break;
+        case '6':
+            textPart = 'storage';
             break;
         case '7':
             textPart = 'psu';
@@ -166,37 +177,65 @@ app.get("/product/:part", function (req, res) {
 
 });
 
+app.post("/addbuild", function (req, res) {
+    temp = '';
+    temp += req.body.build_score;
+    textQuery = 'insert into computer_build values (DEFAULT, ' + '\'' + req.body.build_name + '\', ';
+    textQuery += req.body.build_price + ', '
+    delete req.body.build_price;
+    delete req.body.build_name;
+    delete req.body.build_score;
+    textQuery += '\'' + JSON.stringify(req.body) + '\'' + ', ';
+    textQuery += temp + ')';
+    console.log(textQuery);
+    pg.query(textQuery, (err, resp) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(resp);
+            res.clearCookie("cpu").clearCookie("cpu_cooler").clearCookie("motherboard").clearCookie("ram").clearCookie("gpu").clearCookie("storage").clearCookie("psu").clearCookie("case").clearCookie("display").redirect('/list');
+        }
+    });
+});
+
+app.post("/resetAllCookie", function (req, res) {
+    res.clearCookie("cpu").clearCookie("cpu_cooler").clearCookie("motherboard").clearCookie("ram").clearCookie("gpu").clearCookie("storage").clearCookie("psu").clearCookie("case").clearCookie("display").redirect('/list');
+});
+
 app.get("/builds", function (req, res) {
     queryText =
-        "select P.part_id, P.part_type, P.part_name, P.part_price, P.part_score, P.part_data, CB.build_id, CB.build_name, CB.build_price from  part as P, computer_build as CB \
-    where P.part_id = (CB.build_data->>'cpu')::numeric \
-    UNION \
-    select P.part_id, P.part_type, P.part_name, P.part_price, P.part_score, P.part_data, CB.build_id, CB.build_name, CB.build_price from  part as P, computer_build as CB \
-    where P.part_id = (CB.build_data->>'cpu_cooler')::numeric \
-    UNION \
-    select P.part_id, P.part_type, P.part_name, P.part_price, P.part_score, P.part_data, CB.build_id, CB.build_name, CB.build_price from  part as P, computer_build as CB \
-    where P.part_id = (CB.build_data ->> 'motherboard'):: numeric \
-    UNION \
-    select P.part_id, P.part_type, P.part_name, P.part_price, P.part_score, P.part_data, CB.build_id, CB.build_name, CB.build_price from  part as P, computer_build as CB \
-    where P.part_id = (CB.build_data ->> 'ram'):: numeric \
-    UNION \
-    select P.part_id, P.part_type, P.part_name, P.part_price, P.part_score, P.part_data, CB.build_id, CB.build_name, CB.build_price from  part as P, computer_build as CB \
-    where P.part_id = (CB.build_data ->> 'gpu'):: numeric \
-    UNION \
-    select P.part_id, P.part_type, P.part_name, P.part_price, P.part_score, P.part_data, CB.build_id, CB.build_name, CB.build_price from  part as P, computer_build as CB \
-    where P.part_id = (CB.build_data ->> 'psu'):: numeric \
-    UNION \
-    select P.part_id, P.part_type, P.part_name, P.part_price, P.part_score, P.part_data, CB.build_id, CB.build_name, CB.build_price from  part as P, computer_build as CB \
-    where P.part_id = (CB.build_data ->> 'case'):: numeric \
-    UNION \
-    select P.part_id, P.part_type, P.part_name, P.part_price, P.part_score, P.part_data, CB.build_id, CB.build_name, CB.build_price from  part as P, computer_build as CB \
-    where P.part_id = (CB.build_data ->> 'display'):: numeric \
-    ORDER BY build_id asc, \
-    part_type asc";
+        "select * from  part as P, computer_build as CB \
+         where P.part_id = (CB.build_data->>'1')::numeric \
+        UNION \
+        select * from  part as P, computer_build as CB \
+         where P.part_id = (CB.build_data->>'2')::numeric \
+        UNION \
+        select * from  part as P, computer_build as CB \
+         where P.part_id = (CB.build_data->>'3')::numeric \
+        UNION \
+        select * from  part as P, computer_build as CB \
+         where P.part_id = (CB.build_data->>'4')::numeric \
+        UNION \
+        select * from  part as P, computer_build as CB \
+         where P.part_id = (CB.build_data->>'5')::numeric \
+        UNION \
+        select * from  part as P, computer_build as CB \
+         where P.part_id = (CB.build_data->>'6')::numeric \
+        UNION \
+        select * from  part as P, computer_build as CB \
+         where P.part_id = (CB.build_data->>'7')::numeric \
+        UNION \
+        select * from  part as P, computer_build as CB \
+         where P.part_id = (CB.build_data->>'8')::numeric \
+        UNION \
+        select * from  part as P, computer_build as CB \
+         where P.part_id = (CB.build_data->>'9')::numeric \
+        order by  build_id, part_type asc";
     pg.query(queryText, (err1, computer_builds) => {
         if (err1) {
             console.log("POSTGRES ERROR: " + err1);
         } else {
+            console.log(JSON.stringify(computer_builds.rows));
             res.render("builds", { computer_builds: computer_builds.rows });
         }
     });

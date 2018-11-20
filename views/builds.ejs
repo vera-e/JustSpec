@@ -2,12 +2,14 @@
 
 <% include partials/header %>
 <div class="container">
-    <table class="table table.table-bordered">
+    <h2>Computer Builds</h2>
+    <table class="table table-bordered" cellspacing="10">
         <thead>
             <tr>
                 <th scope="col">Build</th>
                 <th scope="col">Component</th>
-                <th scope="col">Price</th>
+                <th scope="col" colspan="2">Price</th>
+                <!-- <th>&nbsp;</th> -->
                 <!-- <th scope="col">Speed</th> -->
             </tr>
         </thead>
@@ -29,7 +31,7 @@
                     <%= build.build_price %>
                 </th>
                 <td>
-                    <button class="btn btn-primary" type="submit ">Add</button>
+                    <input class="single-checkbox" type="checkbox" name="vehicle" value="<%= build.build_id %>"> Choose to compare
                 </td>
             </tr>
             <% currentBuild = build.build_id %>
@@ -42,6 +44,8 @@
                 <td>
                     <%= build.part_name %>
                 </td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
             </tr>
             <% } %>
 
@@ -50,6 +54,8 @@
                 <td>
                     <%= build.part_name %>
                 </td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
             </tr>
             <% } %>
 
@@ -58,4 +64,12 @@
         </tbody>
     </table>
 </div>
+<script>
+    var limit = 2;
+    $('input.single-checkbox').on('click', function (evt) {
+        if ($('.single-checkbox:checked').length > limit) {
+            this.checked = false;
+        }
+    });
+</script>
 <% include partials/footer %>
