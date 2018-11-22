@@ -1,0 +1,61 @@
+<% include partials/header %>
+<div class="container">
+    <% var stringToShow = ""; %>
+    <% var partType = part_data[0].part_type; %>
+    <% console.log(partType); %>
+    <% console.log(typeof(partType)); %>
+    <% if (partType == 1 ) { %> 
+        <% stringToShow += "CPU"; %>
+    <% } else if (partType == 2) { %>
+        <% stringToShow += "CPU Cooler"; %>
+    <% } else if (partType == 3) { %>
+        <% stringToShow += "Motherboard" %>
+    <% } else if (partType == 4) { %>
+        <% stringToShow += "Memory" %>
+    <% } else if (partType == 5) { %>
+        <% stringToShow += "Video Card"; %>
+    <% } else if (partType == 6) { %>
+        <% stringToShow += "Storage"; %>
+    <% } else if (partType == 7) { %>
+        <% stringToShow += "Power Supply"; %>
+    <% } else if (partType == 8) { %>
+        <% stringToShow += "Case"; %>
+    <% } else if (partType == 9) { %>
+        <% stringToShow += "Monitor"; %>
+    <% } %>
+    <h2>Choose A 
+        <%= stringToShow %>
+    </h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Score</th>
+                <!-- <th scope="col">Speed</th> -->
+            </tr>
+        </thead>
+        <tbody>
+            <% part_data.forEach( function(eachPart) { %>
+            <tr>
+                <th scope="row">
+                    <%= eachPart.part_name %>
+                </th>
+                <td>
+                    <%= eachPart.part_price %>
+                </td>
+                <td>
+                    <%= eachPart.part_score %>
+                </td>
+                <!-- <td><%= eachPart.part_data.speed %></td> -->
+                <td>
+                    <form action="/list?type=<%= eachPart.part_type %>&id=<%= eachPart.part_id %>" method="post">
+                        <button type="submit" name="part" class="btn btn-primary">Add</button>
+                    </form>
+                </td>
+                <% }); %>
+            <tr>
+        </tbody>
+    </table>
+</div>
+<% include partials/footer %>
