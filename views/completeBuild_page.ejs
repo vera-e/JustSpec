@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>CompletedBuilds</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+    <link rel="stylesheet" href="public/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="https://code.highcharts.com/css/highcharts.css">
+    <link rel="stylesheet" href="public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="public/css/magnific-popup.css">
+    <link rel="stylesheet" href="public/css/jquery-ui.css">
+    <link rel="stylesheet" href="public/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="public/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="public/css/aos.css">
+    <link rel="stylesheet" href="public/css/style.css">
+    <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
+
+</head>
+
+
+<body>
+
+    <!-- Top content -->
+    <div class="site-wrap">
+
+
+        <!-- navBar -->
+        <header class="site-navbar" role="banner">
+            <!-- TopNativeBar -->
+            <div class="site-navbar-top">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <!-- site-block-top-search -->
+                        <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
+                            <form action="" class="site-block-top-search">
+                                <span class="icon icon-search2"></span>
+                                <input type="text" class="form-control border-0" placeholder="Search">
+                            </form>
+                        </div>
+                        <!-- site-logo -->
+                        <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
+                            <div class="site-logo">
+                                <div class="js-logo-clone">
+                                    <img src="/public/images/Logo.png" width="100px" height="40px">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- site-top-icons -->
+                        <div class="col-6 col-md-4 order-3 order-md-3 text-right">
+                            <div class="site-top-icons">
+                                <ul>
+                                    <li><a href="#"><span class="icon icon-person"></span></a></li>
+                                    <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
+                                    <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span
+                                                class="icon-menu"></span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- NativeMenuBar -->
+            <nav class="site-navigation text-right text-md-center" role="navigation">
+                <div class="container">
+                    <ul class="site-menu js-clone-nav d-none d-md-block">
+
+                        <li><a href="#">Home</a></li>
+                        <li><svg class="lnr lnr-i">
+                                <use xlink:href="#lnr-rocket"></use>
+                            </svg><a href="#">SYSTEM BUILDS</a></li>
+                        <li class="active"><svg class="lnr lnr-i">
+                                <use xlink:href="#lnr-screen"></use>
+                            </svg><a href="#">COMPLETED BUILDS</a></li>
+                        <li><svg class="lnr lnr-i">
+                                <use xlink:href="#lnr-cog"></use>
+                            </svg><a href="#">INVIDUAL PART</a></li>
+                        <li><svg class="lnr lnr-i">
+                                <use xlink:href="#lnr-question-circle"></use>
+                            </svg><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+
+        <!-- SecondBar -->
+        <div class="bg-light py-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 mb-0"><a href="#">Home</a> <span class="mx-2 mb-0">/</span><a href="#"><strong
+                                class="text-black">Compared Builds</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="site-section" >
+            <div class="container">
+                <h3 class="text-black h5">LET's BUILD TOGETHER</h3>
+                <div class="row mb-5">
+                    <!-- All Builds is here -->
+                    <div class="col-md-9"  data-aos="fade-up">
+                        
+                        <!-- ShowContents -->
+                        <div class="block-9 border">
+                            <form method="GET" action="/compare">
+                                <table class="table table-bordered" >
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" >
+                                                <h5>Build</h5>
+                                            </th>
+                                            <th scope="col">
+                                                <h5>Component</h5>
+                                            </th>
+                                            <th scope="col" >
+                                                <h5>Price</h5>
+                                            </th>
+                                            <th scope="col" >
+                                                <h5>Choose to compare</h5>
+                                            </th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <% var currentBuild = -1; %>
+                                        <% computer_builds.forEach((build) => { %>
+                                        <% if (currentBuild != build.build_id) { %>
+                                        <tr>
+                                            <th rowspan="3">
+                                                <%= build.build_name %>
+                                            </th>
+
+                                            <% if (build.part_type === 1) { %>
+                                            <td>
+                                                <%= build.part_name %>
+                                            </td>
+                                            <% } %>
+
+                                            <th rowspan="3">
+                                                <%= build.build_price %>
+                                            </th>
+
+                                            <td rowspan="3">
+                                                <input class="single-checkbox" type="checkbox" name="buildId" value="<%= build.build_id %>">
+                                            </td>
+                                        </tr>
+                                        <% currentBuild = build.build_id %>
+                                        <% } %>
+
+
+                                        <% if (build.part_type === 4) { %>
+                                        <tr>
+                                            <td>
+                                                <%= build.part_name %>
+                                            </td>
+                                           
+                                          
+                                        </tr>
+                                        <% } %>
+
+                                        <% if (build.part_type === 5) { %>
+                                        <tr>
+                                            <td>
+                                                <%= build.part_name %>
+                                            </td>
+                                            
+                                        </tr>
+                                        <% } %>
+
+                                        <% }); %>
+                                    </tbody>
+                                </table>
+                                <button type="submit" class="btn btn-block btn-primary" id="buttonCompare">Compare</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- New Filter -->
+                    <div class="col-md-3 order-1 mb-5 mb-md-0">
+                        <div class="border p-4 rounded mb-4">
+                            <div class="mb-4">
+                                <h3 class="mb-3 h6 text-uppercase text-black d-block">Filter by Price</h3>
+                                <form action="/" method="GET" class="form-inline" style="margin: 0 auto;">
+                                    <label class="col-form-label" for="inlineFormInputPrice1">Price Range: </label>
+                                    <input type="number" class="form-control mx-1 my-3" id="inlineFormInputPrice1"
+                                        placeholder="Mininum Price" name="minPrice" style="width: 280px;">
+                                    <label class="col-form-label" for="inlineFormInputPrice2"> to </label>
+                                    <input type="number" class="form-control mx-1 my-3" id="inlineFormInputPrice2"
+                                        placeholder="Maxinum Price" name="maxPrice" style="width: 280px;">
+                                    <label class="mx-1 my-3" for="inlineFormCustomSelectPref">Sort By</label>
+                                    <select class="custom-select mx-1 my-3" id="inlineFormSort" name="sort">
+                                        <option value="1" selected>Name, A to Z</option>
+                                        <option value="2">Name, Z to A</option>
+                                        <option value="3">Price, low to high</option>
+                                        <option value="4">Price, high to low</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-primary m-2" id="submitSort">Sort and
+                                        Filter</button>
+                                </form>
+                                <script>
+                                    var submitSort = document.getElementById("submitSort");
+                                    submitSort.addEventListener("mouseenter", function (event) {
+        
+                                        var priceMin = document.getElementById("inlineFormInputPrice1").valueAsNumber;
+                                        var priceMax = document.getElementById("inlineFormInputPrice2").valueAsNumber;
+        
+                                        console.log(priceMin, priceMax);
+                                        if (isNaN(priceMin) && isNaN(priceMax)) {
+                                            console.log("All pass")
+                                        } else {
+        
+                                            if (priceMin < 0 || priceMax < 0) {
+                                                console.log(priceMin, priceMax);
+                                                alert("Please enter possitive number");
+                                                priceMin.value = '';
+                                                priceMax.value = '';
+                                                location.reload();
+                                            } else if (priceMax - priceMin < 0) {
+                                                console.log(priceMin, priceMax);
+                                                alert("Please enter valid price range");
+                                                priceMin.value = '';
+                                                priceMax.value = '';
+                                                location.reload();
+                                            }
+                                            else if (isNaN(priceMin) || isNaN(priceMax)) {
+                                                console.log(priceMin, priceMax);
+                                                alert("Please enter both price range");
+                                                priceMin.value = '';
+                                                priceMax.value = '';
+                                                location.reload();
+                                            }
+                                            console.log('Pass inside')
+                                        }
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FooterofPage -->
+                <footer class="site-footer border-top">
+                    <div class="container">
+                        <div class="row pt-5 mt-5 text-center">
+                            <div class="col-md-12">
+                                <p>
+                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                    Copyright &copy;
+                                    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+                                    <script>document.write(new Date().getFullYear());</script> All rights
+                                    reserved | This
+                                    template
+                                    is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com"
+                                        target="_blank" class="text-primary">Colorlib</a>
+                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </footer>
+
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        var validateCompare = document.getElementById('buttonCompare');
+        console.log(validateCompare);
+        validateCompare.addEventListener("mouseenter", function (event) {
+            console.log($('.single-checkbox:checked').length);
+            if ($('.single-checkbox:checked').length < 2) {
+                alert("Need 2 builds to compare");
+            }
+        });
+    </script>
+
+
+    <script src="public/js/jquery-3.3.1.min.js"></script>
+    <script src="public/js/jquery-ui.js"></script>
+    <script src="public/js/popper.min.js"></script>
+    <script src="public/js/bootstrap.min.js"></script>
+    <script src="public/js/owl.carousel.min.js"></script>
+    <script src="public/js/jquery.magnific-popup.min.js"></script>
+    <script src="public/js/aos.js"></script>
+    <script src="public/js/main.js"></script>
+    <script src="https://cdn.linearicons.com/free/1.0.0/svgembedder.min.js"></script>
+    <!-- chart -->
+    <script>
+        var limit = 4;
+        $('input.single-checkbox').on('click', function (evt) {
+            if ($('.single-checkbox:checked').length > limit) {
+                alert("Can compare up to 4 builds");
+                this.checked = false;
+            }
+        });
+    </script>
+</body>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+</html>

@@ -1,0 +1,331 @@
+<% include partials/header %>
+
+<!-- Top content -->
+<div class="site-wrap">
+
+    <!-- navBar -->
+    <header class="site-navbar" role="banner">
+        <!-- TopNativeBar -->
+        <div class="site-navbar-top">
+            <div class="container">
+                <div class="row align-items-center">
+                    <!-- site-block-top-search -->
+                    <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
+                        <form action="" class="site-block-top-search">
+                            <span class="icon icon-search2"></span>
+                            <input type="text" class="form-control border-0" placeholder="Search">
+                        </form>
+                    </div>
+                    <!-- site-logo -->
+                    <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
+                        <div class="site-logo">
+                            <!-- <a href="#" class="js-logo-clone">Shoppers</a> -->
+                            <div class="js-logo-clone">
+                                <img src="/public/images/Logo.png" width="100px" height="40px">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- site-top-icons -->
+                    <div class="col-6 col-md-4 order-3 order-md-3 text-right">
+                        <div class="site-top-icons">
+                            <ul>
+                                <li><a href="#"><span class="icon icon-person"></span></a></li>
+                                <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
+                                <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span
+                                            class="icon-menu"></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- NativeMenuBar -->
+        <nav class="site-navigation text-right text-md-center" role="navigation">
+            <div class="container">
+                <ul class="site-menu js-clone-nav d-none d-md-block">
+
+                    <li><a href="#">Home</a></li>
+                    <li><svg class="lnr lnr-i">
+                            <use xlink:href="#lnr-rocket"></use>
+                        </svg><a href="#">SYSTEM BUILDS</a></li>
+                    <li class="active"><svg class="lnr lnr-i">
+                            <use xlink:href="#lnr-screen"></use>
+                        </svg><a href="#">COMPLETED BUILDS</a></li>
+                    <li><svg class="lnr lnr-i">
+                            <use xlink:href="#lnr-cog"></use>
+                        </svg><a href="#">INVIDUAL PART</a></li>
+                    <li><svg class="lnr lnr-i">
+                            <use xlink:href="#lnr-question-circle"></use>
+                        </svg><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+
+    <!-- SecondBar -->
+    <div class="bg-light py-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 mb-0"><a href="#">Home</a> <span class="mx-2 mb-0">/</span><a href="http://localhost:3000/?minPrice=&maxPrice=&sort=1
+                    ">Completed
+                        Builds</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Compared Builds</strong></div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- MainInfo -->
+    <div class="site-section" >
+        <div class="container">
+            <!-- CompareWindow -->
+            <div class="row mb-5">
+                <!-- All Head Table-->
+                <div class="col-md-12">
+                    <table>
+                        <thead class="border">
+                            <% const N = computer_builds.length/9 %>
+                            <tr >
+                                <th>&nbsp;</th>
+                                <% for (var i = 0; i < N; i++) {%>
+                                <th>
+                                    <p>
+                                        <%= computer_builds[i].build_name; %>
+                                    </p>
+                                    <img src="#" width="100px" height="100px">
+                                </th>
+                                <% } %>
+                            </tr>
+
+                        </thead>
+
+                        
+
+                        <!-- Text Each Row in Table -->
+                        <tbody class="border">
+                            <tr>
+                                <th>CPU</th>
+                                <% computer_builds.forEach((build) => { %>
+                                <% if (build.part_type == 1) { %>
+                                <td>
+                                    <%= build.part_name %>
+                                </td>
+                                <% } %>
+                                <% } )%>
+                            </tr>
+                            <tr>
+                                <th>CPU COOLER</th>
+                                <% computer_builds.forEach((build) => { %>
+                                <% if (build.part_type == 2) { %>
+                                <td>
+                                    <%= build.part_name %>
+                                </td>
+                                <% } %>
+                                <% } )%>
+                            </tr>
+                            <tr>
+                                <th>MOTHERBOARD</th>
+                                <% computer_builds.forEach((build) => { %>
+                                <% if (build.part_type == 3) { %>
+                                <td>
+                                    <%= build.part_name %>
+                                </td>
+                                <% } %>
+                                <% } )%>
+                            </tr>
+                            <tr>
+                                <th>RAM</th>
+                                <% computer_builds.forEach((build) => { %>
+                                <% if (build.part_type == 4) { %>
+                                <td>
+                                    <%= build.part_name %>
+                                </td>
+                                <% } %>
+                                <% } )%>
+                            </tr>
+                            <tr>
+                                <th>GPU</th>
+                                <% computer_builds.forEach((build) => { %>
+                                <% if (build.part_type == 5) { %>
+                                <td>
+                                    <%= build.part_name %>
+                                </td>
+                                <% } %>
+                                <% } )%>
+                            </tr>
+                            <tr>
+                                <th>STORAGE</th>
+                                <% computer_builds.forEach((build) => { %>
+                                <% if (build.part_type == 6) { %>
+                                <td>
+                                    <%= build.part_name %>
+                                </td>
+                                <% } %>
+                                <% } )%>
+                            </tr>
+                            <tr>
+                                <th>PSU</th>
+                                <% computer_builds.forEach((build) => { %>
+                                <% if (build.part_type == 7) { %>
+                                <td>
+                                    <%= build.part_name %>
+                                </td>
+                                <% } %>
+                                <% } )%>
+                            </tr>
+
+                            <tr>
+                                <th>CASE</th>
+                                <% computer_builds.forEach((build) => { %>
+                                <% if (build.part_type == 8) { %>
+                                <td>
+                                    <%= build.part_name %>
+                                </td>
+                                <% } %>
+                                <% } )%>
+                            </tr>
+                            <tr>
+                                <th>DISPLAY</th>
+                                <% computer_builds.forEach((build) => { %>
+                                <% if (build.part_type == 9) { %>
+                                <td>
+                                    <%= build.part_name %>
+                                </td>
+                                <% } %>
+                                <% } )%>
+                            </tr>
+                        </tbody>
+
+
+                        <!-- Foot Table//Button -->
+                        <tfoot class="border">
+                                <tr>
+                                    <td>&nbsp;</th>
+                                        <% for (var i = 0; i < N; i++) {%>
+                                    <td>
+                                        <h3>
+                                            <%= computer_builds[i].build_price + " Baht"; %>
+                                        </h3>
+                                    </td>
+                                    <% } %>
+                                </tr>
+                            </tfoot>
+                    </table>
+                </div>
+            </div>
+            <!-- Data Table -->
+            <table class="row mb-5" style="display:none" id="datatable">
+                <thead style="display:none">
+                    <tr>
+                        <th></th>
+                        <% for (var i = 0; i < N; i++) {%>
+                        <th>
+                            <%= computer_builds[i].build_name; %>
+                        </th>
+                        <% } %>
+                    </tr>
+                </thead>
+                <tbody style="display:none">
+                    <tr>
+                        <th>Performace</th>
+                        <% var maxScore = 0 %>
+                        <% var maxScoreName = "" %>
+                        <% for (var i = 0; i < N; i++) {%>
+                        <th>
+                            <% if (computer_builds[i].build_score > maxScore) { %>
+                            <% maxScore = computer_builds[i].build_score %>
+                            <% maxScoreName = computer_builds[i].build_name %>
+                            <% } %>
+                            <%= computer_builds[i].build_score; %>
+                        </th>
+                        <% } %>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Total Result -->
+            <div data-aos="fade-up" class="text-center">
+                <h3 class="Omg">This best build is <strong>
+                        <%=maxScoreName%></strong> with <strong> %>
+                        <%=maxScore%></strong> performace score!!!</h3> %>
+            </div>
+            <!-- Show Table -->
+            <div class="row mb-5" id="containerC" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+            <div>
+                *Scores Refferance: Mr.Sarayut KumppingKawe
+                    <a href="https://www.cpubenchmark.net/CPU_mega_page.html">cpu</a>
+                    <a href="https://www.techspot.com/products/cooling/">cpucoolor</a>
+                    <a href="https://www.techspot.com/products/motherboards/">motherboards</a>
+                    <a href="https://gpu.userbenchmark.com/">gpu</a>
+                    <a href="https://www.techspot.com/products/cases/">cases</a>
+                    <a href="https://www.techspot.com/products/cases/">displays</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- FooterofPage -->
+<footer class="site-footer border-top">
+    <div class="container">
+        <div class="row pt-5 mt-5 text-center">
+            <div class="col-md-12">
+                <p>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    Copyright &copy;
+                    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+                    <script>document.write(new Date().getFullYear());</script> All rights reserved | This template
+                    is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank"
+                        class="text-primary">Colorlib</a>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                </p>
+            </div>
+
+        </div>
+    </div>
+</footer>
+</div>
+
+
+
+
+<script src="public/js/jquery-3.3.1.min.js"></script>
+<script src="public/js/jquery-ui.js"></script>
+<script src="public/js/popper.min.js"></script>
+<script src="public/js/bootstrap.min.js"></script>
+<script src="public/js/owl.carousel.min.js"></script>
+<script src="public/js/jquery.magnific-popup.min.js"></script>
+<script src="public/js/aos.js"></script>
+<script src="public/js/main.js"></script>
+<script src="https://cdn.linearicons.com/free/1.0.0/svgembedder.min.js"></script>
+
+<!-- chart -->
+<script>
+    Highcharts.chart('containerC', {
+        data: {
+            table: 'datatable'
+        },
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Performace of Each Build'
+        },
+        yAxis: {
+            allowDecimals: false,
+            title: {
+                text: 'Score'
+            }
+        },
+        tooltip: {
+            formatter: function () {
+                return '<b>' + this.series.name + '</b><br/>' +
+                    this.point.y + ' ' + this.point.name.toLowerCase();
+            }
+        }
+    });
+</script>
+
+
+<% include partials/footer %>
